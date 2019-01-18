@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">WhatMovie</string>
+    <!--main menu-->
+    <string name="main_division">Menu</string>
+    <string name="movies_menu">Movies</string>
+    <string name="tv_shows_menu">Tv Shows</string>
+
+    <!--Drawer-->
+    <string name="navigation_drawer_open">Abrir</string>
+    <string name="navigation_drawer_close">Cerrar</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
