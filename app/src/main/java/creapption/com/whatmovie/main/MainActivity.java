@@ -25,14 +25,9 @@ import creapption.com.whatmovie.apps.movies.ui.MoviesFragment;
  * */
 public class MainActivity extends AppCompatActivity {
 
-    @BindView(R.id.navigationView)
-    NavigationView navigationView;
-
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
-
-    @BindView(R.id.drawer_layout)
-    DrawerLayout drawerLayout;
+    @BindView(R.id.navigationView) NavigationView navigationView;
+    @BindView(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.drawer_layout) DrawerLayout drawerLayout;
 
     private ActionBarDrawerToggle toggle;
 
@@ -45,32 +40,6 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         setupNavigationDrawer();
-    }
-
-    /**
-     * Config Navigation Drawer and set ItemSelectedListener.
-     * */
-    private void setupNavigationDrawer() {
-        //Toolbar Config
-        setSupportActionBar(toolbar);
-        toolbar.setTitleTextColor(Color.WHITE);
-
-        toggle = new ActionBarDrawerToggle(this, drawerLayout,
-                toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawerLayout.addDrawerListener(toggle);
-
-        navigationView.setNavigationItemSelectedListener(
-                new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                selectDrawerItem(item);
-                return true;
-            }
-        });
-
-        // Set Default Selected Fragment
-         selectDrawerItem(navigationView.getMenu().findItem(R.id.nav_movies));
-         navigationView.setCheckedItem(R.id.nav_movies);
     }
 
     /**
@@ -98,10 +67,36 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
+     * Config Navigation Drawer and set ItemSelectedListener.
+     * */
+    private void setupNavigationDrawer() {
+        //Toolbar Config
+        setSupportActionBar(toolbar);
+        toolbar.setTitleTextColor(Color.WHITE);
+
+        toggle = new ActionBarDrawerToggle(this, drawerLayout,
+                toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawerLayout.addDrawerListener(toggle);
+
+        navigationView.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        selectDrawerItem(item);
+                        return true;
+                    }
+                });
+
+        // Set Default Selected Fragment
+        selectDrawerItem(navigationView.getMenu().findItem(R.id.nav_movies));
+        navigationView.setCheckedItem(R.id.nav_movies);
+    }
+
+    /**
      * Show Fragment from the menu selected in the Navigation Drawer.
      * @param menuItem item to be selected.
      * */
-    public void selectDrawerItem(MenuItem menuItem) {
+    private void selectDrawerItem(MenuItem menuItem) {
         Fragment fragment;
         Class fragmentClass;
         switch(menuItem.getItemId()) {
@@ -119,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
                     .replace(R.id.content_frame, fragment)
                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                     .commit();
-        } catch (Exception e) {
+        } catch (java.lang.InstantiationException | IllegalAccessException e) {
             e.printStackTrace();
         }
 

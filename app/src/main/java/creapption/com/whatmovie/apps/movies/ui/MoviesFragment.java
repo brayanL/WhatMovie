@@ -1,109 +1,105 @@
 package creapption.com.whatmovie.apps.movies.ui;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import creapption.com.whatmovie.R;
 
 /**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link MoviesFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link MoviesFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * @author bomar24
+ * Movies Fragment this contain {@link BottomNavigationView} to visualize Popular,
+ * Top Rated and Upcoming Movies.
  */
 public class MoviesFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    @BindView(R.id.bottom_navigation) BottomNavigationView bottomNavigationView;
 
-    private OnFragmentInteractionListener mListener;
+    private Unbinder mUnbinder;
+    private Class fragmentClass;
+
+    private static final String TAG = MoviesFragment.class.getSimpleName();
 
     public MoviesFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment MoviesFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static MoviesFragment newInstance(String param1, String param2) {
-        MoviesFragment fragment = new MoviesFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_movies, container, false);
-    }
+        //Config for ButterKnife
+        View view = inflater.inflate(R.layout.fragment_movies, container, false);
+        mUnbinder = ButterKnife.bind(this, view);
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
+        setupBottomNavigation();
 
-   /* @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }*/
+        //set default Fragment
+        fragmentClass = PopularMovieFragment.class;
+        setFragment(fragmentClass);
+
+        return view;
+    }
 
     @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
+    public void onDestroyView() {
+        super.onDestroyView();
+        mUnbinder.unbind();
     }
 
     /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+     * Config BottomNavigationView and show every child Fragment
+     * according to the menu selected by the user.
+     * */
+    private void setupBottomNavigation() {
+        bottomNavigationView.setOnNavigationItemSelectedListener(
+                new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.nav_popular:
+                        fragmentClass = PopularMovieFragment.class;
+                        setFragment(fragmentClass);
+                        return true;
+                    case R.id.nav_top_rated:
+                        fragmentClass = TopRatedMovieFragment.class;
+                        setFragment(fragmentClass);
+                        return true;
+                    case R.id.nav_upcoming:
+                        fragmentClass = UpcomingMovieFragment.class;
+                        setFragment(fragmentClass);
+                        return true;
+                    default:
+                        return false;
+                }
+            }
+        });
+    }
+
+    /**
+     * Generic implementation for instance child fragments.
+     * @param fragmentClass fragment that will be instantiated.
+     * */
+    private void setFragment(Class fragmentClass) {
+        Fragment fragment;
+        try {
+            fragment = (Fragment) fragmentClass.newInstance();
+            if (getFragmentManager() != null) {
+                getFragmentManager().beginTransaction().replace(R.id.content_movies, fragment).commit();
+            } else {
+                Log.i(TAG, "getFragmentManager was null, fragment was not instanced");
+            }
+
+        } catch (java.lang.InstantiationException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
     }
 }
