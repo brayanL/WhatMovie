@@ -5,6 +5,10 @@ public class Constants {
     public static final String API_KEY ="926c1c808d79ec5bfcc3bdc85dd3a4b3";
 
     //movie tags
+    public static final String MOVIE_CATEGORY= "MOVIE_CATEGORY";
+    public static final String RELEASE_TYPE = "2|3";
+    public static final String REGION = "US";
+
     public static final String POPULAR_MOVIE = "popular";
     public static final String TOP_RATED_MOVIE = "top_rated";
     public static final String UPCOMING_MOVIE = "upcoming";

@@ -27,21 +27,17 @@ import dagger.android.support.AndroidSupportInjection;
 
 /**
  * @author bomar24
- * Show Popular Movies in {@link android.support.design.widget.BottomNavigationView}.
+ * Show Popular Movies.
  */
 public class PopularMovieFragment extends Fragment implements MoviesView {
 
+    @BindView(R.id.recycler_movies) RecyclerView recyclerViewMovies;
+    @BindView(R.id.progress_bar_popular_movie) ProgressBar progressBar;
+
     @Inject
     MoviesPresenter moviesPresenter;
-
     @Inject
     Context context;
-
-    @BindView(R.id.recycler_movies)
-    RecyclerView recyclerViewMovies;
-
-    @BindView(R.id.progress_bar_popular_movie)
-    ProgressBar progressBar;
 
     private static final String TAG = PopularMovieFragment.class.getSimpleName();
     private MoviesListAdapter mAdapter;
@@ -58,7 +54,9 @@ public class PopularMovieFragment extends Fragment implements MoviesView {
         mUnbinder = ButterKnife.bind(this, view);
 
         //get movies list
-        moviesPresenter.getMovies(Constants.POPULAR_MOVIE);
+        if (getArguments() != null) {
+            moviesPresenter.getMovies(getArguments().getString(Constants.MOVIE_CATEGORY));
+        }
 
         setupAdapter();
 

@@ -2,6 +2,7 @@ package creapption.com.whatmovie.data;
 
 import creapption.com.whatmovie.data.remote.WhatMovieService;
 import creapption.com.whatmovie.data.remote.api.MovieResponseModel;
+import creapption.com.whatmovie.util.Constants;
 import io.reactivex.Observable;
 
 /**
@@ -19,7 +20,18 @@ public class DataManager {
         this.mWhatMovieService = mWhatMovieService;
     }
 
+    /**
+     * Communicates with te service to obtain the movie list according to
+     * the parameters provided.
+     * @param movieCategory the movie categories
+     * @return main object response like an {@link Observable}
+     * */
     public Observable<MovieResponseModel> getMovies(String movieCategory) {
-        return mWhatMovieService.getMovies(movieCategory);
+        if (movieCategory.equals(Constants.UPCOMING_MOVIE)) {
+            return mWhatMovieService.getUpcomingMovies(movieCategory,
+                    Constants.RELEASE_TYPE, Constants.REGION);
+        } else {
+            return mWhatMovieService.getMovies(movieCategory);
+        }
     }
 }

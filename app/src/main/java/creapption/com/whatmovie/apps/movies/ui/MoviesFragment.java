@@ -12,6 +12,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import creapption.com.whatmovie.R;
+import creapption.com.whatmovie.util.Constants;
 
 /**
  * @author bomar24
@@ -24,6 +25,7 @@ public class MoviesFragment extends Fragment {
 
     private Unbinder mUnbinder;
     private Class fragmentClass;
+    private Bundle mBundle = new Bundle();
 
     private static final String TAG = MoviesFragment.class.getSimpleName();
 
@@ -42,7 +44,7 @@ public class MoviesFragment extends Fragment {
 
         //set default Fragment
         fragmentClass = PopularMovieFragment.class;
-        setFragment(fragmentClass);
+        setFragment(fragmentClass, Constants.POPULAR_MOVIE);
 
         return view;
     }
@@ -63,15 +65,15 @@ public class MoviesFragment extends Fragment {
                     switch (item.getItemId()) {
                         case R.id.nav_popular:
                             fragmentClass = PopularMovieFragment.class;
-                            setFragment(fragmentClass);
+                            setFragment(fragmentClass, Constants.POPULAR_MOVIE);
                             return true;
                         case R.id.nav_top_rated:
-                            fragmentClass = TopRatedMovieFragment.class;
-                            setFragment(fragmentClass);
+                            fragmentClass = PopularMovieFragment.class;
+                            setFragment(fragmentClass, Constants.TOP_RATED_MOVIE);
                             return true;
                         case R.id.nav_upcoming:
-                            fragmentClass = UpcomingMovieFragment.class;
-                            setFragment(fragmentClass);
+                            fragmentClass = PopularMovieFragment.class;
+                            setFragment(fragmentClass, Constants.UPCOMING_MOVIE);
                             return true;
                         default:
                             return false;
@@ -82,12 +84,15 @@ public class MoviesFragment extends Fragment {
     /**
      * Generic implementation for instance child fragments.
      * @param fragmentClass fragment that will be instantiated.
+     * @param movieCategory the movie category which will be consulted by the service.
      * */
-    private void setFragment(Class fragmentClass) {
+    private void setFragment(Class fragmentClass, String movieCategory) {
         Fragment fragment;
         try {
             fragment = (Fragment) fragmentClass.newInstance();
             if (getFragmentManager() != null) {
+                mBundle.putString(Constants.MOVIE_CATEGORY, movieCategory);
+                fragment.setArguments(mBundle);
                 getFragmentManager().beginTransaction().replace(R.id.content_movies, fragment).commit();
             } else {
                 Log.i(TAG, "getFragmentManager was null, fragment was not instanced");
