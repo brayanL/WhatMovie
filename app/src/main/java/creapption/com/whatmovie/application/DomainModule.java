@@ -6,6 +6,7 @@ import com.google.gson.GsonBuilder;
 
 import creapption.com.whatmovie.BuildConfig;
 import creapption.com.whatmovie.data.DataManager;
+import creapption.com.whatmovie.data.remote.AddParameterInterceptor;
 import creapption.com.whatmovie.data.remote.WhatMovieService;
 import dagger.Module;
 import dagger.Provides;
@@ -51,6 +52,8 @@ public class DomainModule {
                 : HttpLoggingInterceptor.Level.NONE);
 
         httpClientBuilder.addNetworkInterceptor(httpLoggingInterceptor);
+        //add api_key parameter interceptor
+        httpClientBuilder.addInterceptor(new AddParameterInterceptor());
 
         OkHttpClient customOkHttpClient = httpClientBuilder.build();
 

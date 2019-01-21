@@ -1,12 +1,10 @@
 package creapption.com.whatmovie.apps.movies.ui;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -61,27 +59,24 @@ public class MoviesFragment extends Fragment {
      * */
     private void setupBottomNavigation() {
         bottomNavigationView.setOnNavigationItemSelectedListener(
-                new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.nav_popular:
-                        fragmentClass = PopularMovieFragment.class;
-                        setFragment(fragmentClass);
-                        return true;
-                    case R.id.nav_top_rated:
-                        fragmentClass = TopRatedMovieFragment.class;
-                        setFragment(fragmentClass);
-                        return true;
-                    case R.id.nav_upcoming:
-                        fragmentClass = UpcomingMovieFragment.class;
-                        setFragment(fragmentClass);
-                        return true;
-                    default:
-                        return false;
-                }
-            }
-        });
+                item -> {
+                    switch (item.getItemId()) {
+                        case R.id.nav_popular:
+                            fragmentClass = PopularMovieFragment.class;
+                            setFragment(fragmentClass);
+                            return true;
+                        case R.id.nav_top_rated:
+                            fragmentClass = TopRatedMovieFragment.class;
+                            setFragment(fragmentClass);
+                            return true;
+                        case R.id.nav_upcoming:
+                            fragmentClass = UpcomingMovieFragment.class;
+                            setFragment(fragmentClass);
+                            return true;
+                        default:
+                            return false;
+                    }
+                });
     }
 
     /**

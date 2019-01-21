@@ -27,11 +27,12 @@ task clean(type: Delete) {
 }
 
 ext {
-    library = '27.1.1'
+    library = '28.0.0'
     rxandroid = '2.1.0'
     rxjava = '2.2.5'
     retrofit = '2.5.0'
     okHttp = '3.12.0'
     dagger = '2.20'
     butterKnife = '8.8.1'
+    glide = '4.8.0'
 }

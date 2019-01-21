@@ -1,6 +1,8 @@
 package creapption.com.whatmovie.data;
 
 import creapption.com.whatmovie.data.remote.WhatMovieService;
+import creapption.com.whatmovie.data.remote.api.MovieResponseModel;
+import io.reactivex.Observable;
 
 /**
  * It keeps a reference to every helper class and uses
@@ -15,5 +17,9 @@ public class DataManager {
 
     public DataManager(WhatMovieService mWhatMovieService) {
         this.mWhatMovieService = mWhatMovieService;
+    }
+
+    public Observable<MovieResponseModel> getMovies(String movieCategory) {
+        return mWhatMovieService.getMovies(movieCategory);
     }
 }
