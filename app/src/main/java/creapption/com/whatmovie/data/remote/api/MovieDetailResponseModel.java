@@ -3,12 +3,13 @@ package creapption.com.whatmovie.data.remote.api;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Class that contain detail response object for movies service.
  * */
-public class MovieDetailResponseModel {
+public class MovieDetailResponseModel implements Serializable {
     @Expose
     @SerializedName("vote_count")
     private Long voteCount;

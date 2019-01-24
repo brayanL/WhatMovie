@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,12 +54,14 @@ public class PopularMovieFragment extends Fragment implements MoviesView {
         View view = inflater.inflate(R.layout.fragment_popular_movie, container, false);
         mUnbinder = ButterKnife.bind(this, view);
 
+        //ButterKnife.setDebug(true);
+
+        setupAdapter();
+
         //get movies list
         if (getArguments() != null) {
             moviesPresenter.getMovies(getArguments().getString(Constants.MOVIE_CATEGORY));
         }
-
-        setupAdapter();
 
         return view;
     }
@@ -67,6 +70,8 @@ public class PopularMovieFragment extends Fragment implements MoviesView {
     public void onDestroyView() {
         super.onDestroyView();
         mUnbinder.unbind();
+        moviesPresenter.onDestroy();
+        Log.i(TAG, "onDestroyView: Called Here");
     }
 
     @Override

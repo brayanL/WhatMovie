@@ -3,12 +3,13 @@ package creapption.com.whatmovie.data.remote.api;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Class that contain main response object for movies service.
  * */
-public class MovieResponseModel {
+public class MovieResponseModel implements Serializable {
     @Expose
     @SerializedName("page")
     private Long page;

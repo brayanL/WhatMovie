@@ -13,6 +13,7 @@ import io.reactivex.schedulers.Schedulers;
 public class MoviesPresenterImpl implements MoviesPresenter {
 
     private static final String TAG = MoviesPresenterImpl.class.getSimpleName();
+    private Disposable mSubscription = null;
 
     private DataManager mDataManager;
     private MoviesView moviesView;
@@ -32,8 +33,8 @@ public class MoviesPresenterImpl implements MoviesPresenter {
                     @Override
                     public void onSubscribe(Disposable d) {
                         Log.d(TAG, "onSubscribe: Called");
+                        mSubscription = d;
                     }
-
                     @Override
                     public void onNext(MovieResponseModel movieResponseModel) {
                         Log.i(TAG, "onNext: " + movieResponseModel.getResults());
@@ -51,5 +52,11 @@ public class MoviesPresenterImpl implements MoviesPresenter {
                     }
                 });
         Log.i(TAG, "getMovies: MoviesPresenterImpl");
+    }
+
+
+    @Override
+    public void onDestroy() {
+        mSubscription.dispose();
     }
 }

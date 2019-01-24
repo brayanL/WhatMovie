@@ -1,14 +1,19 @@
 package creapption.com.whatmovie.apps.movies.ui;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 
 import java.util.List;
 
@@ -45,9 +50,28 @@ public class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdapter.Cu
     public void onBindViewHolder(@NonNull CustomViewHolder holder, int position) {
         MovieDetailResponseModel movie = moviesList.get(position);
 
-        Glide.with(mContext)
-                .load(Constants.POSTER_IMAGE_BASE_URL.concat(movie.getPosterPath()))
-                .into(holder.posterMovie);
+        // Check if image is null
+        if (movie.getPosterPath() != null) {
+            Glide.with(mContext)
+                    .applyDefaultRequestOptions(new RequestOptions()
+                            .placeholder(R.drawable.ic_launcher_foreground)
+                            .fallback(R.drawable.ic_launcher_foreground)
+                            .error(R.drawable.ic_launcher_background))
+                    .load(Constants.POSTER_IMAGE_BASE_URL.concat(movie.getPosterPath()))
+                    .into(holder.posterMovie);
+        } else {
+            Glide.with(mContext).load(R.drawable.ic_launcher_foreground).into(holder.posterMovie);
+        }
+
+        holder.cardMovies.setOnClickListener(v -> {
+            Intent i = new Intent(mContext, DetailMovieActivity.class);
+            i.putExtra(Constants.DATA_MOVIE_DETAIL, movie);
+            v.getContext().startActivity(i);
+            /*v.getContext().startActivity(new Intent(mContext, DetailMovieActivity.class)
+                    .putExtra(Constants.DATA_MOVIE_DETAIL, movie));*/
+            //Log.d("CARDVIEW", "onBindViewHolder: ");
+
+        });
     }
 
     @Override
@@ -67,6 +91,9 @@ public class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdapter.Cu
 
         @BindView(R.id.image_poster_movie)
         ImageView posterMovie;
+
+        @BindView(R.id.card_movies)
+        CardView cardMovies;
 
         Unbinder unbinder;
 
