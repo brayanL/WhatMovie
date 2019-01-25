@@ -32,7 +32,6 @@ public class MoviesPresenterImpl implements MoviesPresenter {
                 .subscribe(new Observer<MovieResponseModel>() {
                     @Override
                     public void onSubscribe(Disposable d) {
-                        Log.d(TAG, "onSubscribe: Called");
                         mSubscription = d;
                     }
                     @Override
@@ -44,6 +43,7 @@ public class MoviesPresenterImpl implements MoviesPresenter {
                     @Override
                     public void onError(Throwable e) {
                         Log.e(TAG, "onError: ", e);
+                        moviesView.showMovies(null);
                     }
 
                     @Override

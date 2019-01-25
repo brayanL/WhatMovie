@@ -16,7 +16,9 @@ public class Constants {
     //image base url
     public static final String POSTER_IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w400";
     public static final String BACKDROP_IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500";
+    public static final String ACTOR_IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w200";
 
     //tag detail movies
     public static final String DATA_MOVIE_DETAIL = "DATA_MOVIE_DETAIL";
+    public static final String APPENED_TO_RESPONSE = "videos,credits";
 }

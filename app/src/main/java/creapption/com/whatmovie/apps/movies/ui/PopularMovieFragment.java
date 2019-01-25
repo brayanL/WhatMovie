@@ -54,7 +54,6 @@ public class PopularMovieFragment extends Fragment implements MoviesView {
         View view = inflater.inflate(R.layout.fragment_popular_movie, container, false);
         mUnbinder = ButterKnife.bind(this, view);
 
-        //ButterKnife.setDebug(true);
 
         setupAdapter();
 
@@ -82,8 +81,12 @@ public class PopularMovieFragment extends Fragment implements MoviesView {
 
     @Override
     public void showMovies(MovieResponseModel movieResponseModels) {
+        if(movieResponseModels != null) {
+            mAdapter.updateMoviesList(movieResponseModels.getResults());
+        } else {
+            //fixme: show empty view for error to get movies.
+        }
         progressBar.setVisibility(View.GONE);
-        mAdapter.updateMoviesList(movieResponseModels.getResults());
     }
 
     private void setupAdapter() {

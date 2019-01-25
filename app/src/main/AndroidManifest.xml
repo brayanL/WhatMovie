@@ -14,7 +14,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".main.MainActivity">
+            android:name=".main.MainActivity"
+            android:configChanges="orientation|screenSize"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
@@ -22,8 +24,9 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".apps.movies.ui.DetailMovieActivity"
-            android:parentActivityName=".main.MainActivity">
+            android:name=".apps.movies.ui.detaiMovie.ui.DetailMovieActivity"
+            android:parentActivityName=".main.MainActivity"
+            android:configChanges="orientation|screenSize">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".main.MainActivity"/>

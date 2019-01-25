@@ -1,6 +1,9 @@
 package creapption.com.whatmovie.data;
 
+import java.util.concurrent.TimeUnit;
+
 import creapption.com.whatmovie.data.remote.WhatMovieService;
+import creapption.com.whatmovie.data.remote.api.MovieByIdResponseModel;
 import creapption.com.whatmovie.data.remote.api.MovieResponseModel;
 import creapption.com.whatmovie.util.Constants;
 import io.reactivex.Observable;
@@ -31,7 +34,17 @@ public class DataManager {
             return mWhatMovieService.getUpcomingMovies(movieCategory,
                     Constants.RELEASE_TYPE, Constants.REGION);
         } else {
-            return mWhatMovieService.getMovies(movieCategory);
+            return mWhatMovieService.getMovies(movieCategory).timeout(20, TimeUnit.SECONDS);
         }
+    }
+
+    /**
+     * Communicates with te service to obtain the movie detail according to movie ID.
+     * @param movieID id of movie
+     * @return main object response like an {@link Observable}
+     * */
+    public Observable<MovieByIdResponseModel> getDetailMovie(Long movieID) {
+        return mWhatMovieService.getDetailMovie(movieID, Constants.APPENED_TO_RESPONSE)
+                .timeout(20, TimeUnit.SECONDS);
     }
 }

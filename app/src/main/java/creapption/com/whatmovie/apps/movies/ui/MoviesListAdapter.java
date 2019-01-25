@@ -2,11 +2,9 @@ package creapption.com.whatmovie.apps.movies.ui;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +19,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import creapption.com.whatmovie.R;
+import creapption.com.whatmovie.apps.movies.ui.detaiMovie.ui.DetailMovieActivity;
 import creapption.com.whatmovie.data.remote.api.MovieDetailResponseModel;
 import creapption.com.whatmovie.util.Constants;
 
@@ -63,14 +62,11 @@ public class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdapter.Cu
             Glide.with(mContext).load(R.drawable.ic_launcher_foreground).into(holder.posterMovie);
         }
 
+        //show another activity when a movie is clicked
         holder.cardMovies.setOnClickListener(v -> {
             Intent i = new Intent(mContext, DetailMovieActivity.class);
             i.putExtra(Constants.DATA_MOVIE_DETAIL, movie);
             v.getContext().startActivity(i);
-            /*v.getContext().startActivity(new Intent(mContext, DetailMovieActivity.class)
-                    .putExtra(Constants.DATA_MOVIE_DETAIL, movie));*/
-            //Log.d("CARDVIEW", "onBindViewHolder: ");
-
         });
     }
 
@@ -89,11 +85,8 @@ public class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdapter.Cu
      * */
     public class CustomViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.image_poster_movie)
-        ImageView posterMovie;
-
-        @BindView(R.id.card_movies)
-        CardView cardMovies;
+        @BindView(R.id.image_poster_movie) ImageView posterMovie;
+        @BindView(R.id.card_movies) CardView cardMovies;
 
         Unbinder unbinder;
 

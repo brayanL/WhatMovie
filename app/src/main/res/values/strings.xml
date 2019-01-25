@@ -16,6 +16,7 @@
 
     <!--Movies-->
     <string name="poster_image_description">Main Image for Movie</string>
+    <string name="title_actor_name">Actor Name</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

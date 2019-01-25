@@ -4,6 +4,9 @@ import creapption.com.whatmovie.application.DomainModule;
 import creapption.com.whatmovie.apps.movies.di.MoviesModule;
 import creapption.com.whatmovie.apps.movies.di.MoviesViewModule;
 import creapption.com.whatmovie.apps.movies.ui.PopularMovieFragment;
+import creapption.com.whatmovie.apps.movies.ui.detaiMovie.di.DetailMovieModule;
+import creapption.com.whatmovie.apps.movies.ui.detaiMovie.di.DetailMovieViewModule;
+import creapption.com.whatmovie.apps.movies.ui.detaiMovie.ui.DetailMovieActivity;
 import creapption.com.whatmovie.main.MainActivity;
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
@@ -22,4 +25,8 @@ public abstract class BuildersModule {
 
     @ContributesAndroidInjector(modules = {DomainModule.class, MoviesModule.class, MoviesViewModule.class})
     abstract PopularMovieFragment bindPopularMovieFragment();
+
+    @ContributesAndroidInjector(modules = {DomainModule.class, DetailMovieModule.class,
+            DetailMovieViewModule.class})
+    abstract DetailMovieActivity bindDetailMovieActivity();
 }

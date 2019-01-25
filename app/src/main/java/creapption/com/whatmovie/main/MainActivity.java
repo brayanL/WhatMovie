@@ -94,12 +94,9 @@ public class MainActivity extends AppCompatActivity implements HasSupportFragmen
         drawerLayout.addDrawerListener(toggle);
 
         navigationView.setNavigationItemSelectedListener(
-                new NavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                        selectDrawerItem(item);
-                        return true;
-                    }
+                item -> {
+                    selectDrawerItem(item);
+                    return true;
                 });
 
         // Set Default Selected Fragment

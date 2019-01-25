@@ -1,5 +1,6 @@
 package creapption.com.whatmovie.data.remote;
 
+import creapption.com.whatmovie.data.remote.api.MovieByIdResponseModel;
 import creapption.com.whatmovie.data.remote.api.MovieResponseModel;
 import io.reactivex.Observable;
 import retrofit2.http.GET;
@@ -33,4 +34,14 @@ public interface WhatMovieService {
             @Path(value = "movie_category", encoded = true) String movieCategory,
             @Query(encoded = true, value = "with_release_type") String releaseType,
             @Query(encoded = true, value = "region") String region);
+
+    /**
+     * Get movie detail by id.
+     * @param movieID ID movie to be searched.
+     * @param append additional information
+     * */
+    @GET("movie/{movie_id}")
+    Observable<MovieByIdResponseModel> getDetailMovie(
+            @Path(value = "movie_id", encoded = true) Long movieID,
+            @Query(value = "append_to_response", encoded = true) String append);
 }

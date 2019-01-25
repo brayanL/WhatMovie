@@ -7,7 +7,9 @@ import com.google.gson.GsonBuilder;
 import creapption.com.whatmovie.BuildConfig;
 import creapption.com.whatmovie.data.DataManager;
 import creapption.com.whatmovie.data.remote.AddParameterInterceptor;
+import creapption.com.whatmovie.data.remote.WhatMovieDeserializer;
 import creapption.com.whatmovie.data.remote.WhatMovieService;
+import creapption.com.whatmovie.data.remote.api.MovieByIdResponseModel;
 import dagger.Module;
 import dagger.Provides;
 import okhttp3.OkHttpClient;
@@ -58,6 +60,7 @@ public class DomainModule {
         OkHttpClient customOkHttpClient = httpClientBuilder.build();
 
         final GsonBuilder gsonBuilder = new GsonBuilder();
+        gsonBuilder.registerTypeAdapter(MovieByIdResponseModel.class, new WhatMovieDeserializer());
         gsonBuilder.excludeFieldsWithoutExposeAnnotation();
 
         return new Retrofit.Builder().baseUrl(BuildConfig.BASE_URL)
